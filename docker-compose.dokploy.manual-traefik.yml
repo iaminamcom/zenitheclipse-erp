@@ -1,0 +1,35 @@
+# Advanced option only: manual Traefik labels instead of the Dokploy Domains UI.
+# Replace erp.yourdomain.com with your real domain.
+services:
+  zenith-erp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zenitheclipse/erp-ultimate:latest
+    restart: unless-stopped
+    expose:
+      - "8080"
+    environment:
+      ZENITH_ERP_ADDR: "0.0.0.0:8080"
+      ZENITH_ERP_BROWSER: "0"
+      ZENITH_ERP_DATA: "/data"
+      ZENITH_ERP_COOKIE_SECURE: "1"
+      ZENITH_ERP_ADMIN_PASSWORD: "CHANGE_ME_BEFORE_FIRST_DEPLOY"
+    volumes:
+      - zenith_erp_data:/data
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dokploy-network"
+      - "traefik.http.routers.zenith-erp.rule=Host(`erp.yourdomain.com`)"
+      - "traefik.http.routers.zenith-erp.entrypoints=websecure"
+      - "traefik.http.routers.zenith-erp.tls.certresolver=letsencrypt"
+      - "traefik.http.services.zenith-erp.loadbalancer.server.port=8080"
+
+volumes:
+  zenith_erp_data:
+
+networks:
+  dokploy-network:
+    external: true

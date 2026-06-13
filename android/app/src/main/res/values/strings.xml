@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Zenith ERP Ultimate</string>
+    <!-- Change this after you deploy the ERP server. Example: https://erp.zenitheclipse.com or http://192.168.1.20:8080 -->
+    <string name="erp_url">http://YOUR-SERVER-IP:8080</string>
+</resources>

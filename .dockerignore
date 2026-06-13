@@ -1,0 +1,13 @@
+.git
+.gitignore
+.DS_Store
+*.zip
+*.tar
+*.tar.gz
+*.deb
+*.exe
+data/
+node_modules/
+docker-bin/
+android/.gradle/
+android/app/build/

@@ -1,0 +1,32 @@
+# Dokploy Compose file.
+# Add your domain in Dokploy UI -> Domains tab:
+# Service: zenith-erp
+# Port: 8080
+services:
+  zenith-erp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zenitheclipse/erp-ultimate:latest
+    restart: unless-stopped
+    ports:
+      - "8080"
+    environment:
+      ZENITH_ERP_ADDR: "0.0.0.0:8080"
+      ZENITH_ERP_BROWSER: "0"
+      ZENITH_ERP_DATA: "/data"
+      ZENITH_ERP_COOKIE_SECURE: "1"
+      # IMPORTANT: set your own strong password before the first deploy.
+      # It is only used when the database file /data/data.json is created the first time.
+      ZENITH_ERP_ADMIN_PASSWORD: "CHANGE_ME_BEFORE_FIRST_DEPLOY"
+    volumes:
+      - zenith_erp_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  zenith_erp_data:

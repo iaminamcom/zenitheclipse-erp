@@ -1,0 +1,16 @@
+[Unit]
+Description=Zenith Eclipse ERP Ultimate
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/zenith-erp
+ExecStart=/opt/zenith-erp/ZenithEclipseERP_Ultimate_Server_Linux
+Environment=ZENITH_ERP_ADDR=0.0.0.0:8080
+Environment=ZENITH_ERP_BROWSER=0
+Environment=ZENITH_ERP_DATA=/var/lib/zenith-erp
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

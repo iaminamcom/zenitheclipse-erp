@@ -1,0 +1,29 @@
+# Local Docker Compose test file.
+# For Dokploy, use docker-compose.dokploy.yml instead.
+services:
+  zenith-erp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zenitheclipse/erp-ultimate:local
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ZENITH_ERP_ADDR: "0.0.0.0:8080"
+      ZENITH_ERP_BROWSER: "0"
+      ZENITH_ERP_DATA: "/data"
+      ZENITH_ERP_COOKIE_SECURE: "0"
+      # Change before first start in production. Only used when /data/data.json does not exist yet.
+      ZENITH_ERP_ADMIN_PASSWORD: "change-this-admin-password"
+    volumes:
+      - zenith_erp_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  zenith_erp_data:
