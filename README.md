@@ -22,3 +22,11 @@ Change the password after first login.
 Use `docker-compose.yml` with Dokploy Docker Compose. Add a domain in Dokploy and point it to service `zenith-erp` on port `8080`.
 
 Persistent ERP data is stored in the Docker volume `zenith_erp_data` mounted to `/data`.
+
+The container initializes ownership of `/data` automatically, then runs the ERP
+as the unprivileged `zenith` user (UID `10001`). After updating an existing
+deployment, rebuild the image rather than only restarting the old container.
+
+```bash
+docker compose up -d --build --force-recreate
+```

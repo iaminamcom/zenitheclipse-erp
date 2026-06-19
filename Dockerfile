@@ -19,6 +19,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
+        gosu \
         tzdata \
         chromium \
         fonts-dejavu \
@@ -30,13 +31,14 @@ RUN apt-get update \
 
 WORKDIR /app
 COPY --from=build /out/zenith-erp /app/zenith-erp
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN useradd --system --uid 10001 --gid 0 --home-dir /data zenith \
     && mkdir -p /data/uploads /data/backups \
     && chown -R 10001:0 /data /app \
-    && chmod -R g=u /data /app
+    && chmod -R g=u /data /app \
+    && chmod 0755 /usr/local/bin/docker-entrypoint.sh
 
-USER 10001
 ENV ZENITH_ERP_DOCKER=1 \
     ZENITH_ERP_HEADLESS=1 \
     ZENITH_ERP_HOME=/data \
@@ -50,4 +52,5 @@ VOLUME ["/data"]
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
     CMD curl -fsS http://127.0.0.1:${ZENITH_ERP_PORT:-8080}/health | grep -q ok || exit 1
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["/app/zenith-erp"]
