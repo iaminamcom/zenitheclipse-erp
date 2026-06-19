@@ -3,13 +3,268 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zenith Eclipse ERP Ultimate</title>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" href="/icon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
+  <title>Zenith Eclipse ERP</title>
+  <style>
+    :root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--primary:#172554;--primary2:#1e40af;--good:#087f5b;--warn:#b45309;--bad:#b91c1c;--soft:#eef2ff;--shadow:0 12px 35px rgba(15,23,42,.08)}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif} button,input,select,textarea{font:inherit}
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:28px;background:linear-gradient(135deg,#0f172a,#1d4ed8)}
+    .login-card{width:min(440px,100%);background:white;border-radius:26px;padding:32px;box-shadow:0 25px 80px rgba(0,0,0,.25)}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}.brand-mark{height:52px;width:52px;border-radius:16px;background:#172554;color:#fff;display:grid;place-items:center;font-weight:900}.brand h1{font-size:22px;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}
+    label{font-weight:800;font-size:12px;color:#334155;display:block;margin:12px 0 6px}.input,input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px 12px;background:white;color:var(--ink);outline:none} textarea{min-height:92px;resize:vertical}.input:focus,input:focus,select:focus,textarea:focus{border-color:#1d4ed8;box-shadow:0 0 0 4px rgba(29,78,216,.09)}
+    .btn{border:0;border-radius:12px;padding:10px 14px;font-weight:900;cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}.btn.primary{background:var(--primary);color:white}.btn.secondary{background:#e2e8f0;color:#0f172a}.btn.good{background:var(--good);color:white}.btn.warn{background:var(--warn);color:white}.btn.bad{background:var(--bad);color:white}.btn.ghost{background:transparent;color:var(--primary);border:1px solid var(--line)}.btn.small{padding:7px 9px;border-radius:10px;font-size:12px}.btn:disabled{opacity:.55;cursor:not-allowed}
+    .hint{color:var(--muted);font-size:12px;line-height:1.5}.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:10px;margin-top:12px}.okbox{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;border-radius:12px;padding:10px;margin-top:12px}
+    .app{display:none;min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:280px;background:#0f172a;color:#dbeafe;display:flex;flex-direction:column;z-index:10}.side-head{padding:20px;border-bottom:1px solid rgba(255,255,255,.08)}.side-head .brand-mark{background:#2563eb}.side-head .brand h1{color:#fff}.side-head .brand p{color:#93c5fd}.nav{overflow:auto;padding:12px}.nav-group-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;margin:16px 10px 8px}.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:10px 12px;border-radius:12px;cursor:pointer;font-weight:750;display:flex;justify-content:space-between;gap:8px}.nav button:hover,.nav button.active{background:#1e293b;color:#fff}.side-foot{margin-top:auto;padding:14px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:#94a3b8}
+    .main{margin-left:280px;min-height:100vh}.topbar{height:76px;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:8;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}.title h2{margin:0;font-size:24px}.title p{margin:4px 0 0;color:var(--muted);font-size:13px}.userbox{display:flex;align-items:center;gap:10px}.avatar{height:40px;width:40px;border-radius:50%;background:#dbeafe;color:#1e3a8a;display:grid;place-items:center;font-weight:900}
+    .content{padding:28px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}.metric .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:900}.metric .value{font-size:28px;font-weight:950;margin-top:8px}.metric .sub{color:var(--muted);font-size:12px;margin-top:4px}.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}.toolbar-left,.toolbar-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{max-width:360px}.table-wrap{background:white;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.table-scroll{overflow:auto;max-height:calc(100vh - 230px)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;z-index:1;color:#334155;font-size:12px;text-transform:uppercase;letter-spacing:.04em}td.muted{color:var(--muted)}.pill{display:inline-block;border-radius:999px;padding:4px 8px;font-weight:900;font-size:11px}.pill.good{background:#dcfce7;color:#166534}.pill.warn{background:#fef3c7;color:#92400e}.pill.bad{background:#fee2e2;color:#991b1b}.pill.neutral{background:#e2e8f0;color:#334155}.pill.info{background:#dbeafe;color:#1e3a8a}.actions{display:flex;gap:6px;align-items:center}.empty{padding:42px;text-align:center;color:var(--muted)}
+    .modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:flex-start;justify-content:center;padding:26px;z-index:30;overflow:auto}.modal-card{background:white;border-radius:22px;width:min(980px,100%);box-shadow:0 30px 90px rgba(0,0,0,.28);overflow:hidden}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}.modal-head h3{margin:0}.modal-body{padding:22px}.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.field.full{grid-column:1/-1}.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:18px 22px;border-top:1px solid var(--line);background:#f8fafc}
+    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.mini-list{display:grid;gap:10px}.mini-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.mini-row b{font-size:13px}.mini-row span{color:var(--muted);font-size:13px;text-align:right}.ai-line{padding:12px;border:1px solid var(--line);border-radius:14px;margin-top:10px;background:#f8fafc}.report-list{columns:2;column-gap:28px}.report-list div{break-inside:avoid;border-bottom:1px solid var(--line);padding:8px 0}.mobile-menu{display:none}
+    @media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}.grid2,.settings-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:760px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:none}.main{margin-left:0}.mobile-menu{display:inline-flex}.topbar{padding:0 14px}.content{padding:16px}.cards{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.modal{padding:12px}th,td{padding:9px}.title h2{font-size:18px}}
+  </style>
 </head>
 <body>
-  <div id="app"></div>
-  <script src="/app.js"></script>
+  <div id="login" class="login-wrap">
+    <div class="login-card">
+      <div class="brand"><div class="brand-mark">ZE</div><div><h1>Zenith Eclipse ERP</h1><p>Local enterprise ERP MVP</p></div></div>
+      <label>Email</label><input id="loginEmail" value="admin@local" autocomplete="username" />
+      <label>Password</label><input id="loginPassword" value="ChangeMe123!" type="password" autocomplete="current-password" />
+      <button class="btn primary" style="width:100%;margin-top:16px" onclick="login()">Login</button>
+      <p class="hint">Default first login is <b>admin@local</b> / <b>ChangeMe123!</b>. Change it from Settings after opening.</p>
+      <div id="loginMsg"></div>
+    </div>
+  </div>
+
+  <div id="app" class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="side-head"><div class="brand"><div class="brand-mark">ZE</div><div><h1>Zenith ERP</h1><p id="companyShort">Company control system</p></div></div></div>
+      <nav id="nav" class="nav"></nav>
+      <div class="side-foot"><div id="userSmall"></div><div style="margin-top:6px">Data is stored locally on this computer.</div></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="btn ghost mobile-menu" onclick="toggleMenu()">☰</button>
+        <div class="title"><h2 id="pageTitle">Dashboard</h2><p id="pageSub">Full company overview</p></div>
+        <div class="userbox"><div class="avatar" id="avatar">A</div><div><b id="userName">Admin</b><div class="hint" id="userRole">Owner</div></div><button class="btn secondary small" onclick="logout()">Logout</button></div>
+      </header>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="modalTitle">Record</h3><button class="btn secondary small" onclick="closeModal()">✕</button></div>
+      <div id="modalBody" class="modal-body"></div>
+      <div id="modalFoot" class="modal-foot"></div>
+    </div>
+  </div>
+
+<script>
+const State = { user:null, company:null, stats:null, module:'dashboard', records:[], editing:null, modulesCache:{}, users:[] };
+const CURRENCIES = ['AED','USD','EUR','OMR','GBP','CNY','AFN','SAR','INR'];
+const STATUS = ['Active','Draft','Open','Pending','In Transit','Delivered','Closed','Cancelled'];
+const APPROVAL = ['Pending','Approved','Rejected','Returned','Not required'];
+const PAYMENT = ['Unpaid','Partial','Paid','Overdue'];
+
+const groups = [
+  ['Main', [['dashboard','Dashboard'],['approvals','Approvals'],['reports','Reports']]],
+  ['Sales', [['customers','Customers'],['suppliers','Suppliers'],['products','Products / Services'],['rfqs','RFQ'],['quotations','Quotations'],['proformas','Proforma Invoices'],['invoices','Commercial Invoices'],['packingLists','Packing Lists']]],
+  ['Transport', [['shipments','Shipments'],['billsOfLading','BL Module'],['deliveryNotes','Delivery Notes']]],
+  ['Finance', [['vouchers','Vouchers'],['expenses','Expenses'],['bankDocuments','Bank Documents']]],
+  ['Admin / Legal', [['employees','Employees'],['contracts','Contracts'],['assets','Assets'],['complianceCases','Compliance / KYC'],['tasks','Tasks']]],
+  ['System', [['audit','Audit Trail'],['settings','Settings']]]
+];
+
+const moduleDefs = {
+  customers:{title:'Customers', sub:'Customer master data, credit, KYC, approvals', key:['code','name','phone','country','creditLimit','approvalStatus','status'], fields:[
+    ['code','Code','readonly'],['name','Customer name','text','req'],['contactPerson','Contact person'],['email','Email'],['phone','Phone'],['country','Country'],['currency','Currency','select',CURRENCIES],['creditLimit','Credit limit','number'],['outstanding','Outstanding','number'],['kycStatus','KYC Status','select',['Pending','Approved','Expired','High risk']],['riskLevel','Risk level','select',['Low','Medium','High']],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  suppliers:{title:'Suppliers', sub:'Supplier database, terms, KYB, approvals', key:['code','name','phone','country','currency','approvalStatus','status'], fields:[
+    ['code','Code','readonly'],['name','Supplier name','text','req'],['contactPerson','Contact person'],['email','Email'],['phone','Phone'],['country','Country'],['currency','Currency','select',CURRENCIES],['paymentTerms','Payment terms'],['kybStatus','KYB Status','select',['Pending','Approved','Expired','High risk']],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  employees:{title:'Employees', sub:'HR files, departments, documents, expiry alerts', key:['code','name','department','role','phone','documentExpiry','status'], fields:[
+    ['code','Employee Code','readonly'],['name','Employee name','text','req'],['department','Department','select',['Accounting','Admin','Legal','Transport','Sales','Operations','Management']],['role','Job role'],['email','Email'],['phone','Phone'],['branch','Branch'],['joiningDate','Joining date','date'],['documentType','Document type'],['documentExpiry','Document expiry','date'],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  products:{title:'Products / Services', sub:'Product, service, transport price list', key:['code','name','category','unit','sellingPrice','currency','status'], fields:[
+    ['code','Code','readonly'],['name','Product / Service name','text','req'],['category','Category','select',['Product','Transport','Customs','Freight','Service','Other']],['unit','Unit'],['buyingCost','Buying cost','number'],['sellingPrice','Selling price','number'],['currency','Currency','select',CURRENCIES],['status','Status','select',STATUS],['description','Description','textarea','full'] ]},
+  rfqs:{title:'RFQ', sub:'Request for quotation and first job reference', key:['docNo','jobRef','date','customer','route','status','createdBy'], fields:[
+    ['docNo','RFQ No.','readonly'],['jobRef','Job Ref.','text'],['date','Date','date'],['customer','Customer','text','req'],['route','Route'],['cargo','Cargo description','textarea','full'],['quantity','Quantity'],['targetPrice','Target price','number'],['currency','Currency','select',CURRENCIES],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  quotations:{title:'Quotations', sub:'Approved quotation with profit control', key:['docNo','jobRef','date','customer','sellingPrice','profit','approvalStatus','status'], fields:[
+    ['docNo','Quotation No.','readonly'],['jobRef','Job Ref.','text'],['date','Date','date'],['customer','Customer','text','req'],['validUntil','Valid until','date'],['route','Route'],['cargo','Cargo / service description','textarea','full'],['buyingCost','Buying cost','number'],['sellingPrice','Selling price','number'],['profit','Profit','number'],['currency','Currency','select',CURRENCIES],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS],['terms','Terms','textarea','full'] ]},
+  proformas:{title:'Proforma Invoices', sub:'PI linked to quotation/job reference', key:['docNo','jobRef','date','customer','total','paymentStatus','approvalStatus','status'], fields:[
+    ['docNo','PI No.','readonly'],['jobRef','Job Ref.','text'],['date','Date','date'],['customer','Customer','text','req'],['description','Description','textarea','full'],['subtotal','Subtotal','number'],['vat','VAT','number'],['total','Total','number'],['currency','Currency','select',CURRENCIES],['paymentStatus','Payment','select',PAYMENT],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  invoices:{title:'Commercial Invoices', sub:'Commercial invoice, receivables, profit tracking', key:['docNo','jobRef','date','customer','total','paymentStatus','approvalStatus','status'], fields:[
+    ['docNo','Invoice No.','readonly'],['jobRef','Job Ref.','text'],['date','Date','date'],['customer','Customer','text','req'],['commercialInvoiceNo','External CI No.'],['description','Description','textarea','full'],['subtotal','Subtotal','number'],['vat','VAT','number'],['total','Total','number'],['cost','Cost','number'],['profit','Profit','number'],['currency','Currency','select',CURRENCIES],['dueDate','Due date','date'],['paymentStatus','Payment','select',PAYMENT],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  packingLists:{title:'Packing Lists', sub:'Packing list linked to invoice/shipment', key:['docNo','jobRef','date','customer','packages','grossWeight','status'], fields:[
+    ['docNo','Packing List No.','readonly'],['jobRef','Job Ref.','text'],['date','Date','date'],['customer','Customer','text','req'],['productDescription','Product description','textarea','full'],['packages','Packages'],['netWeight','Net weight'],['grossWeight','Gross weight'],['volume','Volume / CBM'],['marks','Marks & numbers','textarea','full'],['status','Status','select',STATUS] ]},
+  shipments:{title:'Shipments / Transport', sub:'Containers, trucks, route, customs, GPS status', key:['docNo','jobRef','customer','route','containerNo','truckNo','status','profit'], fields:[
+    ['docNo','Shipment No.','readonly'],['jobRef','Job Ref.','text'],['customer','Customer','text','req'],['supplier','Transport supplier'],['route','Route','text','req'],['origin','Origin'],['destination','Destination'],['containerNo','Container No.'],['sealNo','Seal No.'],['truckNo','Truck No.'],['trailerNo','Trailer No.'],['driverName','Driver name'],['driverMobile','Driver mobile'],['bayanNo','Bayan / Customs No.'],['gatePass','Gate pass'],['portStatus','Port status'],['customsStatus','Customs status'],['borderStatus','Border status'],['gpsLocation','GPS location / link'],['cost','Transport cost','number'],['sellingPrice','Selling price','number'],['profit','Profit','number'],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  billsOfLading:{title:'Bill of Lading', sub:'BL draft, carrier, amendments, approvals', key:['docNo','jobRef','shipper','consignee','containerNo','blType','approvalStatus','status'], fields:[
+    ['docNo','BL No.','readonly'],['jobRef','Job Ref.','text'],['shipper','Shipper','text','req'],['consignee','Consignee','text','req'],['notifyParty','Notify party'],['vesselVoyage','Vessel / Voyage'],['pol','POL'],['pod','POD'],['fpod','FPOD'],['containerNo','Container No.'],['sealNo','Seal No.'],['cargoDescription','Cargo description','textarea','full'],['grossWeight','Gross weight'],['netWeight','Net weight'],['hsCode','HS Code'],['freightTerms','Freight terms','select',['Prepaid','Collect','Third party']],['blType','BL Type','select',['Original BL','Seaway BL','Telex Release','Surrendered BL','eBL']],['surrenderStatus','Surrender status','select',['Not surrendered','Requested','Surrendered']],['amendmentRecord','Amendment record','textarea','full'],['carrierCommunication','Carrier / agent communication','textarea','full'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  deliveryNotes:{title:'Delivery Notes', sub:'POD, receiver, GPS, delivery confirmation', key:['docNo','jobRef','customer','truckNo','containerNo','receiverName','approvalStatus','status'], fields:[
+    ['docNo','Delivery Note No.','readonly'],['jobRef','Job Ref.','text'],['customer','Customer','text','req'],['dateTime','Date & time','datetime-local'],['truckNo','Truck No.'],['driverName','Driver name'],['driverMobile','Driver mobile'],['containerNo','Container No.'],['sealNo','Seal No.'],['productDescription','Product description','textarea','full'],['quantity','Quantity'],['weight','Weight'],['loadingLocation','Loading location'],['deliveryLocation','Delivery location'],['receiverName','Receiver name'],['receiverSignature','Receiver signature text'],['gpsLocation','GPS location / link'],['photoNotes','Delivery photo notes / file refs','textarea','full'],['podStatus','POD status','select',['Pending','Uploaded','Verified','Rejected']],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  vouchers:{title:'Vouchers', sub:'Receipt, payment and internal transfer vouchers', key:['docNo','date','type','party','amount','currency','approvalStatus','status'], fields:[
+    ['docNo','Voucher No.','readonly'],['date','Date','date'],['type','Type','select',['Receipt Voucher','Payment Voucher','Internal Transfer']],['party','Customer / Supplier / Account','text','req'],['bankAccount','Bank / Cash account'],['amount','Amount','number'],['currency','Currency','select',CURRENCIES],['reference','Reference'],['description','Description','textarea','full'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  expenses:{title:'Expenses', sub:'Office, shipment, route and admin expenses', key:['docNo','date','category','party','amount','approvalStatus','status'], fields:[
+    ['docNo','Expense No.','readonly'],['date','Date','date'],['category','Category','select',['Office','Transport','Port charges','Truck waiting','Customs','Legal','HR','Bank','Other']],['party','Paid to'],['jobRef','Job Ref.'],['amount','Amount','number'],['currency','Currency','select',CURRENCIES],['description','Description','textarea','full'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  contracts:{title:'Contracts / Legal', sub:'Contracts, POA, legal records, expiry alerts', key:['docNo','title','party','contractType','expiryDate','approvalStatus','status'], fields:[
+    ['docNo','Contract No.','readonly'],['title','Title','text','req'],['party','Customer / Supplier / Employee'],['contractType','Type','select',['Customer Contract','Supplier Contract','Agency Agreement','Transport Agreement','POA','Legal Case','Company Registration','Other']],['startDate','Start date','date'],['expiryDate','Expiry date','date'],['riskFlag','Legal risk','select',['Low','Medium','High']],['version','Version'],['summary','Summary / clauses','textarea','full'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  assets:{title:'Assets', sub:'Company assets and vehicle/truck document expiry', key:['code','name','assetType','assignedTo','documentExpiry','status'], fields:[
+    ['code','Asset Code','readonly'],['name','Asset name','text','req'],['assetType','Type','select',['Vehicle','Truck','Trailer','Laptop','Office equipment','License','Other']],['assignedTo','Assigned to'],['plateNo','Plate / serial no.'],['purchaseDate','Purchase date','date'],['value','Value','number'],['documentExpiry','Document expiry','date'],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  bankDocuments:{title:'Bank Documents', sub:'Bank uploads, reconciliation and approvals', key:['docNo','date','bankName','accountNo','amount','status'], fields:[
+    ['docNo','Bank Doc No.','readonly'],['date','Date','date'],['bankName','Bank name','text','req'],['accountNo','Account No.'],['documentType','Document type','select',['Statement','Transfer proof','Deposit slip','Reconciliation','Other']],['amount','Amount','number'],['currency','Currency','select',CURRENCIES],['reference','Reference'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS],['notes','Notes','textarea','full'] ]},
+  complianceCases:{title:'Compliance / KYC', sub:'KYC, KYB, sanctions, source of funds, country risk', key:['docNo','partyName','caseType','countryRisk','sanctionsStatus','approvalStatus','status'], fields:[
+    ['docNo','Compliance No.','readonly'],['partyName','Party name','text','req'],['caseType','Case type','select',['KYC','KYB','Sanctions','Source of Funds','Source of Wealth','High Risk Transaction']],['country','Country'],['countryRisk','Country risk','select',['Low','Medium','High','Prohibited']],['sanctionsStatus','Sanctions status','select',['Not screened','Clear','Possible match','Blocked']],['transactionPurpose','Transaction purpose','textarea','full'],['sourceOfFunds','Source of funds'],['beneficialOwner','Beneficial owner'],['riskNotes','Risk notes','textarea','full'],['approvalStatus','Approval','select',APPROVAL],['status','Status','select',STATUS] ]},
+  tasks:{title:'Tasks', sub:'Internal notices, task management, reminders', key:['docNo','title','assignedTo','department','dueDate','status'], fields:[
+    ['docNo','Task No.','readonly'],['title','Task title','text','req'],['assignedTo','Assigned to'],['department','Department','select',['Accounting','Admin','Legal','Transport','Sales','Operations','Management']],['priority','Priority','select',['Low','Medium','High','Urgent']],['dueDate','Due date','date'],['description','Description','textarea','full'],['status','Status','select',['Pending','In Progress','Done','Cancelled']] ]}
+};
+
+function esc(s){return String(s ?? '').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function fmt(v){ if(v===undefined||v===null||v==='') return '—'; if(typeof v==='number') return Number(v).toLocaleString(undefined,{maximumFractionDigits:2}); return esc(v); }
+async function api(path, opts={}){ const res=await fetch(path,{headers:{'Content-Type':'application/json'},...opts}); const data=await res.json().catch(()=>({ok:false,error:'Invalid server response'})); if(!res.ok||!data.ok) throw new Error(data.error||('HTTP '+res.status)); return data.data; }
+function today(){ return new Date().toISOString().slice(0,10); }
+function money(n){ return Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2}); }
+function pill(v){ const s=String(v||'').toLowerCase(); let c='neutral'; if(['approved','paid','active','delivered','closed','done','clear','verified'].some(x=>s.includes(x))) c='good'; if(['pending','draft','partial','in transit','open','requested','returned'].some(x=>s.includes(x))) c='warn'; if(['rejected','cancelled','overdue','high','blocked','expired'].some(x=>s.includes(x))) c='bad'; if(['not required','low'].some(x=>s.includes(x))) c='info'; return `<span class="pill ${c}">${fmt(v)}</span>` }
+
+async function login(){
+  const msg=document.getElementById('loginMsg'); msg.innerHTML='';
+  try{ await api('/api/login',{method:'POST',body:JSON.stringify({email:loginEmail.value,password:loginPassword.value})}); await bootstrap(); }
+  catch(e){ msg.innerHTML=`<div class="error">${esc(e.message)}</div>`; }
+}
+async function logout(){ await fetch('/api/logout'); location.reload(); }
+async function bootstrap(){
+  try{
+    const b=await api('/api/bootstrap'); State.user=b.user; State.company=b.company; State.stats=b.stats; State.users=b.users||[];
+    document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block';
+    companyShort.textContent=State.company.name||'Company control system'; userName.textContent=State.user.name; userRole.textContent=State.user.role+' • '+(State.user.department||''); avatar.textContent=(State.user.name||'A').slice(0,1).toUpperCase(); userSmall.textContent=`${State.user.email} • ${State.user.role}`;
+    renderNav(); await route('dashboard');
+  }catch(e){ document.getElementById('login').style.display='grid'; }
+}
+function renderNav(){
+  nav.innerHTML=groups.map(([g,items])=>`<div class="nav-group-title">${g}</div>`+items.map(([id,label])=>`<button id="nav_${id}" onclick="route('${id}')"><span>${label}</span><span id="navCount_${id}"></span></button>`).join('')).join('');
+}
+function setActive(id,title,sub){ State.module=id; document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active')); const nb=document.getElementById('nav_'+id); if(nb) nb.classList.add('active'); pageTitle.textContent=title; pageSub.textContent=sub||''; if(innerWidth<760) sidebar.classList.remove('open'); }
+function toggleMenu(){ sidebar.classList.toggle('open'); }
+async function route(id){
+  if(id==='dashboard') return renderDashboard();
+  if(id==='approvals') return renderApprovals();
+  if(id==='reports') return renderReports();
+  if(id==='audit') return renderAudit();
+  if(id==='settings') return renderSettings();
+  return renderModule(id);
+}
+
+async function refreshStats(){ State.stats=await api('/api/stats'); }
+async function renderDashboard(){
+  await refreshStats(); setActive('dashboard','Dashboard','Owner and management control overview');
+  const s=State.stats||{};
+  content.innerHTML=`
+    <div class="cards">
+      ${metric('Cash balance',s.cashBalance,'Local calculated receipts minus payments')}
+      ${metric('Receivables',s.receivables,'Open/unpaid commercial invoices')}
+      ${metric('Payables / spend',s.payables,'Payment vouchers and expenses')}
+      ${metric('Profit',s.profit,'Shipment + invoice profit entries')}
+      ${metric('Open shipments',s.openShipments,'Shipments not closed/cancelled')}
+      ${metric('Pending approvals',s.pendingApprovals,'Documents awaiting approval')}
+      ${metric('Pending BL',s.pendingBL,'BL drafts / pending approvals')}
+      ${metric('Pending DN',s.pendingDN,'Delivery note drafts / approvals')}
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>AI management assistant</h3><p class="hint">Local MVP rule engine. Production AI/OCR can be connected later to your private database permissions.</p>${aiLines(s)}</div>
+      <div class="card"><h3>System coverage</h3><div class="mini-list">${Object.entries(s.moduleCounts||{}).sort().map(([k,v])=>`<div class="mini-row"><b>${esc(labelFor(k))}</b><span>${v} records</span></div>`).join('')}</div></div>
+    </div>`;
+}
+function metric(label,value,sub){ return `<div class="card metric"><div class="label">${label}</div><div class="value">${money(value)}</div><div class="sub">${sub}</div></div>` }
+function aiLines(s){
+  const lines=[];
+  if((s.pendingApprovals||0)>0) lines.push(`${s.pendingApprovals} approval item(s) need manager review.`);
+  if((s.receivables||0)>0) lines.push(`Receivables are ${money(s.receivables)}. Follow up unpaid customers.`);
+  if((s.pendingBL||0)>0) lines.push(`${s.pendingBL} BL item(s) are still pending/draft.`);
+  if((s.openShipments||0)>0) lines.push(`${s.openShipments} open shipment(s) should be checked for delay, DO expiry and free time.`);
+  if((s.cashBalance||0)<0) lines.push(`Cash balance is negative in local records. Review payment vouchers and receipts.`);
+  if(!lines.length) lines.push('No urgent issue detected from the current local records.');
+  return lines.map(x=>`<div class="ai-line">${esc(x)}</div>`).join('')
+}
+function labelFor(k){ return moduleDefs[k]?.title || ({approvals:'Approvals',dashboard:'Dashboard',reports:'Reports',audit:'Audit Trail',settings:'Settings'}[k]||k); }
+
+async function renderModule(module){
+  const def=moduleDefs[module]; if(!def){ content.innerHTML='<div class="error">Unknown module</div>'; return; }
+  setActive(module,def.title,def.sub); content.innerHTML='<div class="card">Loading...</div>';
+  State.records=await api('/api/list?module='+encodeURIComponent(module)); State.modulesCache[module]=State.records;
+  const rows=State.records; const keys=def.key;
+  content.innerHTML=`<div class="toolbar"><div class="toolbar-left"><button class="btn primary" onclick="openForm('${module}')">+ New</button><button class="btn secondary" onclick="renderModule('${module}')">Refresh</button></div><div class="toolbar-right"><input class="input search" id="searchBox" placeholder="Search ${esc(def.title)}..." oninput="drawTable('${module}')" /><button class="btn ghost" onclick="downloadCSV('${module}')">Export CSV</button></div></div><div class="table-wrap"><div class="table-scroll"><table><thead><tr>${keys.map(k=>`<th>${esc(fieldLabel(k))}</th>`).join('')}<th>Actions</th></tr></thead><tbody id="tbody"></tbody></table></div></div>`;
+  drawTable(module);
+}
+function drawTable(module){
+  const def=moduleDefs[module]; const q=(document.getElementById('searchBox')?.value||'').toLowerCase();
+  const rows=(State.modulesCache[module]||State.records||[]).filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+  const html=rows.map(r=>`<tr>${def.key.map(k=>`<td>${['approvalStatus','status','paymentStatus','riskLevel','podStatus','kycStatus','kybStatus','sanctionsStatus','countryRisk'].includes(k)?pill(r[k]):fmt(r[k])}</td>`).join('')}<td><div class="actions"><button class="btn secondary small" onclick='openForm("${module}",${JSON.stringify(r.id)})'>Edit</button><button class="btn ghost small" onclick='printDoc("${module}",${JSON.stringify(r.id)})'>Print</button>${approvalButtons(module,r)}<button class="btn bad small" onclick='cancelRecord("${module}",${JSON.stringify(r.id)})'>Cancel</button></div></td></tr>`).join('');
+  tbody.innerHTML=html||`<tr><td colspan="${def.key.length+1}"><div class="empty">No records yet. Click New to create one.</div></td></tr>`;
+}
+function approvalButtons(module,r){ const a=String(r.approvalStatus||''); if(a==='Pending'||a==='Returned'||a.includes('requested')) return `<button class="btn good small" onclick='approveRecord("${module}",${JSON.stringify(r.id)},"Approved")'>Approve</button><button class="btn warn small" onclick='approveRecord("${module}",${JSON.stringify(r.id)},"Returned")'>Return</button><button class="btn bad small" onclick='approveRecord("${module}",${JSON.stringify(r.id)},"Rejected")'>Reject</button>`; return ''; }
+function fieldLabel(k){ const s={docNo:'Document No.',jobRef:'Job Ref.',blNo:'BL No.',pol:'POL',pod:'POD',fpod:'FPOD',hsCode:'HS Code',kycStatus:'KYC Status',kybStatus:'KYB Status'}[k]; if(s) return s; return k.replace(/([A-Z])/g,' $1').replace(/^./,m=>m.toUpperCase()); }
+function openForm(module,id){
+  const def=moduleDefs[module]; const rec=id?(State.modulesCache[module]||[]).find(x=>x.id===id):{}; State.editing={module,id,rec:{...rec}};
+  modalTitle.textContent=(id?'Edit ':'New ')+def.title;
+  modalBody.innerHTML=`<div class="form-grid">${def.fields.map(f=>fieldHTML(f,rec||{})).join('')}</div><div id="formMsg"></div>`;
+  modalFoot.innerHTML=`<button class="btn secondary" onclick="closeModal()">Close</button><button class="btn primary" onclick="saveForm()">Save</button>`;
+  modal.style.display='flex';
+}
+function fieldHTML(f,rec){ const [name,label,type='text',a,b]=f; const full=(a==='full'||b==='full'||type==='textarea')?' full':''; const req=(a==='req'||b==='req')?' required':''; const val=rec[name]??defaultValue(name,type); let input='';
+  if(type==='textarea') input=`<textarea id="f_${name}" ${req}>${esc(val)}</textarea>`;
+  else if(type==='select'){ const opts=(Array.isArray(a)?a:(Array.isArray(b)?b:[])); input=`<select id="f_${name}" ${req}><option value=""></option>${opts.map(o=>`<option ${String(val)===String(o)?'selected':''}>${esc(o)}</option>`).join('')}</select>`; }
+  else if(type==='readonly') input=`<input id="f_${name}" value="${esc(val)}" readonly placeholder="Auto" />`;
+  else input=`<input id="f_${name}" type="${type}" value="${esc(val)}" ${req}/>`;
+  return `<div class="field${full}"><label>${esc(label)}</label>${input}</div>` }
+function defaultValue(name,type){ if(type==='date'||name==='date') return today(); if(name==='currency') return State.company?.currency||'AED'; if(name==='approvalStatus') return 'Pending'; if(name==='paymentStatus') return 'Unpaid'; if(name==='status') return 'Active'; return ''; }
+async function saveForm(){
+  const {module,id}=State.editing; const def=moduleDefs[module]; const rec={id:id||''};
+  for(const f of def.fields){ const name=f[0]; const el=document.getElementById('f_'+name); if(!el) continue; let v=el.value; if(f[2]==='number') v=v===''?'':Number(v); rec[name]=v; }
+  try{ const saved=await api('/api/save',{method:'POST',body:JSON.stringify({module,record:rec})}); closeModal(); await renderModule(module); flash('Saved '+(saved.docNo||saved.code||saved.name||'record')); }
+  catch(e){ formMsg.innerHTML=`<div class="error">${esc(e.message)}</div>`; }
+}
+function closeModal(){ modal.style.display='none'; modalBody.innerHTML=''; modalFoot.innerHTML=''; }
+async function cancelRecord(module,id){ const reason=prompt('Reason for cancellation? Documents are not deleted permanently.'); if(reason===null) return; try{ await api('/api/cancel',{method:'POST',body:JSON.stringify({module,id,reason})}); await renderModule(module); }catch(e){ alert(e.message); } }
+async function approveRecord(module,id,decision){ const reason=prompt(decision+' reason / note:')||''; try{ await api('/api/approve',{method:'POST',body:JSON.stringify({module,id,decision,reason})}); if(State.module==='approvals') await renderApprovals(); else await renderModule(module); }catch(e){ alert(e.message); } }
+function printDoc(module,id){ window.open('/api/document?module='+encodeURIComponent(module)+'&id='+encodeURIComponent(id),'_blank'); }
+function flash(msg){ const d=document.createElement('div'); d.className='okbox'; d.textContent=msg; content.prepend(d); setTimeout(()=>d.remove(),2500); }
+function downloadCSV(module){ const rows=State.modulesCache[module]||[]; if(!rows.length) return alert('No rows'); const keys=[...new Set(rows.flatMap(r=>Object.keys(r)))]; const csv=[keys.join(',')].concat(rows.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(','))).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=module+'.csv'; a.click(); URL.revokeObjectURL(a.href); }
+
+async function renderApprovals(){
+  setActive('approvals','Approvals','Pending approvals and control actions'); content.innerHTML='<div class="card">Loading approvals...</div>';
+  const approvalMods=Object.keys(moduleDefs); const all=[];
+  for(const m of approvalMods){ const rows=await api('/api/list?module='+m).catch(()=>[]); State.modulesCache[m]=rows; rows.forEach(r=>{ const a=String(r.approvalStatus||'').toLowerCase(); if(a==='pending'||a==='returned'||a.includes('requested')) all.push({...r,_module:m}); }); }
+  content.innerHTML=`<div class="toolbar"><button class="btn secondary" onclick="renderApprovals()">Refresh</button></div><div class="table-wrap"><div class="table-scroll"><table><thead><tr><th>Module</th><th>Document</th><th>Job Ref</th><th>Party</th><th>Amount</th><th>Approval</th><th>Updated</th><th>Actions</th></tr></thead><tbody>${all.map(r=>`<tr><td>${esc(labelFor(r._module))}</td><td>${fmt(r.docNo||r.code||r.title||r.name)}</td><td>${fmt(r.jobRef)}</td><td>${fmt(r.customer||r.supplier||r.party||r.partyName||r.shipper)}</td><td>${fmt(r.total||r.amount||r.sellingPrice)}</td><td>${pill(r.approvalStatus)}</td><td>${fmt(r.updatedAt)}</td><td><div class="actions"><button class="btn ghost small" onclick='printDoc("${r._module}",${JSON.stringify(r.id)})'>Print</button><button class="btn good small" onclick='approveRecord("${r._module}",${JSON.stringify(r.id)},"Approved")'>Approve</button><button class="btn warn small" onclick='approveRecord("${r._module}",${JSON.stringify(r.id)},"Returned")'>Return</button><button class="btn bad small" onclick='approveRecord("${r._module}",${JSON.stringify(r.id)},"Rejected")'>Reject</button></div></td></tr>`).join('')||'<tr><td colspan="8"><div class="empty">No pending approvals.</div></td></tr>'}</tbody></table></div></div>`;
+}
+
+async function renderAudit(){
+  setActive('audit','Audit Trail','Who created, edited, approved, rejected, cancelled, and when'); content.innerHTML='<div class="card">Loading audit...</div>';
+  const rows=await api('/api/audit');
+  content.innerHTML=`<div class="toolbar"><button class="btn secondary" onclick="renderAudit()">Refresh</button></div><div class="table-wrap"><div class="table-scroll"><table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Module</th><th>Record</th><th>Summary</th><th>IP</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.at)}</td><td>${fmt(r.userEmail)}</td><td>${pill(r.action)}</td><td>${fmt(labelFor(r.module))}</td><td>${fmt(r.recordId)}</td><td>${fmt(r.summary)}</td><td>${fmt(r.ip)}</td></tr>`).join('')||'<tr><td colspan="7"><div class="empty">No audit records yet.</div></td></tr>'}</tbody></table></div></div>`;
+}
+
+async function renderReports(){
+  await refreshStats(); setActive('reports','Reports','Management summaries from local ERP records'); const s=State.stats||{};
+  content.innerHTML=`<div class="cards">${metric('Cash in',s.totalCashIn,'Receipt vouchers')}${metric('Cash out',s.totalCashOut,'Payments and expenses')}${metric('Receivables',s.receivables,'Unpaid invoices')}${metric('Open shipments',s.openShipments,'Transport operations')}</div><div class="card"><h3>Report checklist</h3><div class="report-list">${[
+    'Profit and loss report','Balance sheet base data','Trial balance base data','Daily cash flow','Customer statement','Supplier statement','Profit per shipment','Profit per container','Profit by customer','Sales by employee','Pending BL report','Pending delivery notes','Overdue customers','Supplier payments due','Container/transit report','Contract expiry report','Compliance risk report','Audit trail report'
+  ].map(x=>`<div>✓ ${x}</div>`).join('')}</div><p class="hint">This MVP stores the records needed for these reports. A production build can add formal accounting ledgers, PDF report packs, Power BI/Metabase, PostgreSQL, and immutable audit storage.</p></div>`;
+}
+
+async function renderSettings(){
+  setActive('settings','Settings','Company profile, users, backup and restore');
+  const c=State.company||{};
+  content.innerHTML=`<div class="settings-grid"><div class="card"><h3>Company profile</h3><div class="form-grid">
+    ${['name','legalName','address','phone','email','website','taxNumber','currency','logoText','stampText','documentNote'].map(k=>`<div class="field ${k==='address'||k==='documentNote'?'full':''}"><label>${fieldLabel(k)}</label>${k==='address'||k==='documentNote'?`<textarea id="s_${k}">${esc(c[k]||'')}</textarea>`:`<input id="s_${k}" value="${esc(c[k]||'')}">`}</div>`).join('')}
+  </div><button class="btn primary" style="margin-top:14px" onclick="saveSettings()">Save company profile</button><div id="settingsMsg"></div></div>
+  <div class="card"><h3>Backup / Restore</h3><p class="hint">Export a JSON backup often. Restore replaces the local database on this computer.</p><p><a class="btn secondary" href="/api/export">Download backup JSON</a></p><input type="file" id="restoreFile" accept="application/json"><button class="btn warn" style="margin-top:10px" onclick="restoreBackup()">Restore backup</button><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3>Change my password</h3><label>Current password</label><input id="curPass" type="password"><label>New password</label><input id="newPass" type="password"><button class="btn primary" style="margin-top:10px" onclick="changePassword()">Change password</button><div id="passMsg"></div></div>
+  <div class="card" style="grid-column:1/-1"><h3>Users</h3><div id="usersBox"></div><button class="btn primary" onclick="openUserForm()">+ Add user</button></div></div>`;
+  drawUsers();
+}
+async function saveSettings(){ const data={}; ['name','legalName','address','phone','email','website','taxNumber','currency','logoText','stampText','documentNote'].forEach(k=>data[k]=document.getElementById('s_'+k).value); try{ State.company=await api('/api/settings',{method:'POST',body:JSON.stringify(data)}); settingsMsg.innerHTML='<div class="okbox">Saved</div>'; companyShort.textContent=State.company.name||''; }catch(e){ settingsMsg.innerHTML=`<div class="error">${esc(e.message)}</div>`; } }
+async function restoreBackup(){ const f=restoreFile.files[0]; if(!f) return alert('Choose backup JSON'); if(!confirm('Restore will replace current local ERP data. Continue?')) return; try{ await fetch('/api/import',{method:'POST',body:await f.text(),headers:{'Content-Type':'application/json'}}).then(async r=>{const d=await r.json(); if(!d.ok) throw new Error(d.error)}); alert('Restored. Please login again.'); location.reload(); }catch(e){ alert(e.message); } }
+async function changePassword(){ try{ await api('/api/change-password',{method:'POST',body:JSON.stringify({current:curPass.value,new:newPass.value})}); passMsg.innerHTML='<div class="okbox">Password changed</div>'; curPass.value=''; newPass.value=''; }catch(e){ passMsg.innerHTML=`<div class="error">${esc(e.message)}</div>`; } }
+function drawUsers(){ usersBox.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Department</th><th>Active</th><th>Actions</th></tr></thead><tbody>${State.users.map(u=>`<tr><td>${fmt(u.name)}</td><td>${fmt(u.email)}</td><td>${fmt(u.role)}</td><td>${fmt(u.department)}</td><td>${pill(u.active?'Active':'Disabled')}</td><td><button class="btn secondary small" onclick='openUserForm(${JSON.stringify(u.id)})'>Edit</button></td></tr>`).join('')}</tbody></table></div>`; }
+function openUserForm(id){ const u=id?State.users.find(x=>x.id===id):{}; modalTitle.textContent=id?'Edit user':'Add user'; modalBody.innerHTML=`<div class="form-grid"><div><label>Name</label><input id="u_name" value="${esc(u.name||'')}"></div><div><label>Email</label><input id="u_email" value="${esc(u.email||'')}"></div><div><label>Role</label><select id="u_role">${['Owner','Admin','Manager','Accounting','Sales','Transport','Legal','Viewer'].map(x=>`<option ${u.role===x?'selected':''}>${x}</option>`).join('')}</select></div><div><label>Department</label><input id="u_department" value="${esc(u.department||'')}"></div><div><label>Branch</label><input id="u_branch" value="${esc(u.branch||'')}"></div><div><label>${id?'New password (blank = keep)':'Password'}</label><input id="u_password" type="password" placeholder="ChangeMe123!"></div><div><label>Active</label><select id="u_active"><option value="true" ${u.active!==false?'selected':''}>Active</option><option value="false" ${u.active===false?'selected':''}>Disabled</option></select></div></div><div id="formMsg"></div>`; modalFoot.innerHTML=`<button class="btn secondary" onclick="closeModal()">Close</button><button class="btn primary" onclick='saveUser(${JSON.stringify(id||'')})'>Save user</button>`; modal.style.display='flex'; }
+async function saveUser(id){ const body={id,name:u_name.value,email:u_email.value,role:u_role.value,department:u_department.value,branch:u_branch.value,password:u_password.value,active:u_active.value==='true'}; try{ await api('/api/users',{method:'POST',body:JSON.stringify(body)}); State.users=await api('/api/users'); closeModal(); drawUsers(); }catch(e){ formMsg.innerHTML=`<div class="error">${esc(e.message)}</div>`; } }
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+bootstrap();
+</script>
 </body>
 </html>

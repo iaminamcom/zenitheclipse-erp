@@ -1,9 +1,0 @@
-{
-  "name": "Zenith Eclipse ERP Ultimate",
-  "short_name": "Zenith ERP",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#f5f8fc",
-  "theme_color": "#0f172a",
-  "icons": [{"src":"/icon.svg","sizes":"any","type":"image/svg+xml"}]
-}

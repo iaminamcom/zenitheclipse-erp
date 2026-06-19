@@ -1,0 +1,4 @@
+services:
+  zenith-erp:
+    ports:
+      - "${APP_PORT:-8080}:8080"
