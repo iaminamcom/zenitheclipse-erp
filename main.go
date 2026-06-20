@@ -296,7 +296,7 @@ func defaultState() State {
 			WhatsApp:            "",
 			Email:               "info@zenitheclipse.com",
 			Website:             "http://www.zenitheclipse.com",
-			VerificationBaseURL: "https://www.zenitheclipse.com/verify",
+			VerificationBaseURL: "https://erp.zenitheclipse.com/verify",
 			TaxNumber:           "TRN / VAT No.",
 			LogoText:            "ZENITH ECLIPSE",
 			StampText:           "AUTHORIZED STAMP",
@@ -454,6 +454,14 @@ func (app *App) ensureStateDefaultsLocked() {
 	if app.state.Settings["v24FooterWorkflowPlacementMigration"] != "done" {
 		app.state.Settings["footerLayoutPolicy"] = "Footer keeps the same height: contact/QR row on top and one-line compact workflow placed in the existing bottom footer space."
 		app.state.Settings["v24FooterWorkflowPlacementMigration"] = "done"
+	}
+	if app.state.Settings["v25VerificationQRMigration"] != "done" {
+		base := strings.ToLower(strings.TrimSpace(app.state.Company.VerificationBaseURL))
+		if base == "" || base == "https://www.zenitheclipse.com/verify" || base == "http://www.zenitheclipse.com/verify" {
+			app.state.Company.VerificationBaseURL = "https://erp.zenitheclipse.com/verify"
+		}
+		app.state.Settings["verificationPolicy"] = "QR codes encode https://erp.zenitheclipse.com/verify/{document_serial} and open the live public ERP verification record."
+		app.state.Settings["v25VerificationQRMigration"] = "done"
 	}
 
 	if app.state.Users == nil || len(app.state.Users) == 0 {
@@ -3959,7 +3967,7 @@ func singlePhone(c Company) string {
 func footerHTML(c Company, rec Record, all []Record, verification, docNo, lang string) string {
 	esc := template.HTMLEscapeString
 	verifyURL := verificationURL(c, rec, docNo)
-	qr := pseudoQRCodeDataURI(verifyURL)
+	qr := qrCodeDataURI(verifyURL)
 	workflow := ""
 	if compactWorkflowAllowed(rec) {
 		workflow = compactWorkflowFooterHTML(c, rec, all)
@@ -4041,7 +4049,7 @@ func yearFromRecord(rec Record) int {
 }
 
 func verificationURL(c Company, rec Record, docNo string) string {
-	base := normalizeVerificationBase(firstNonEmpty(c.VerificationBaseURL, c.Website, "https://www.zenitheclipse.com/verify"))
+	base := normalizeVerificationBase(firstNonEmpty(c.VerificationBaseURL, c.Website, "https://erp.zenitheclipse.com/verify"))
 	serial := firstNonEmpty(docNo, rec.Number, rec.ID)
 	escaped := url.PathEscape(serial)
 	if strings.HasSuffix(base, "/") {
@@ -4053,7 +4061,7 @@ func verificationURL(c Company, rec Record, docNo string) string {
 func normalizeVerificationBase(base string) string {
 	base = strings.TrimSpace(base)
 	if base == "" {
-		return "https://www.zenitheclipse.com/verify"
+		return "https://erp.zenitheclipse.com/verify"
 	}
 	base = strings.TrimRight(base, "/")
 	lower := strings.ToLower(base)
@@ -4087,7 +4095,7 @@ func compactWorkflowAllowed(rec Record) bool {
 	return strings.TrimSpace(firstNonEmpty(rec.JobRef, rec.Fields["jobRef"])) != ""
 }
 
-func pseudoQRCodeDataURI(text string) string {
+func qrCodeDataURI(text string) string {
 	if strings.TrimSpace(text) == "" {
 		text = "ZENITH ECLIPSE DOCUMENT"
 	}
@@ -4714,7 +4722,7 @@ func renderDocxBytes(c Company, rec Record, all []Record) ([]byte, error) {
 	}
 	verification := firstNonEmpty(rec.Fields["verificationCode"], rec.Fields["verification"], strings.ToUpper(rec.ID[:min(12, len(rec.ID))]))
 	verifyURL := verificationURL(c, rec, rec.Number)
-	qrPNG, _ := pseudoQRCodePNGBytes(verifyURL)
+	qrPNG, _ := qrCodePNGBytes(verifyURL)
 	if err := add("[Content_Types].xml", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>`); err != nil {
 		return nil, err
 	}
@@ -5140,12 +5148,12 @@ func xmlEscape(s string) string {
 	return repl.Replace(s)
 }
 
-func pseudoQRCodePNGBytes(text string) ([]byte, error) {
+func qrCodePNGBytes(text string) ([]byte, error) {
 	if strings.TrimSpace(text) == "" {
-		text = "ZENITH"
+		text = "ZENITH ECLIPSE DOCUMENT"
 	}
-	hash := sha256.Sum256([]byte(text))
-	size, cell, quiet := 29, 5, 20
+	matrix := qrMatrix(strings.TrimSpace(text))
+	size, cell, quiet := len(matrix), 5, 4*5
 	full := size*cell + quiet*2
 	img := image.NewRGBA(image.Rect(0, 0, full, full))
 	white := color.RGBA{255, 255, 255, 255}
@@ -5153,34 +5161,6 @@ func pseudoQRCodePNGBytes(text string) ([]byte, error) {
 	for y := 0; y < full; y++ {
 		for x := 0; x < full; x++ {
 			img.Set(x, y, white)
-		}
-	}
-	matrix := make([][]bool, size)
-	for i := 0; i < size; i++ {
-		matrix[i] = make([]bool, size)
-	}
-	finder := func(x0, y0 int) {
-		for y := 0; y < 7; y++ {
-			for x := 0; x < 7; x++ {
-				outer := x == 0 || x == 6 || y == 0 || y == 6
-				inner := x >= 2 && x <= 4 && y >= 2 && y <= 4
-				matrix[y0+y][x0+x] = outer || inner
-			}
-		}
-	}
-	finder(0, 0)
-	finder(size-7, 0)
-	finder(0, size-7)
-	reserved := func(x, y int) bool { return (x < 8 && y < 8) || (x >= size-8 && y < 8) || (x < 8 && y >= size-8) }
-	bit := 0
-	for y := 0; y < size; y++ {
-		for x := 0; x < size; x++ {
-			if reserved(x, y) {
-				continue
-			}
-			b := (hash[(bit/8)%len(hash)] >> uint(bit%8)) & 1
-			matrix[y][x] = b == 1
-			bit++
 		}
 	}
 	for y := 0; y < size; y++ {
