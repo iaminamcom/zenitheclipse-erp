@@ -398,7 +398,7 @@ func (app *App) ensureStateDefaultsLocked() {
 		app.state.Settings["workflowFooterPolicy"] = "Vertical footer workflow with one document per line, same job reference, and different serial number per document type."
 		app.state.Settings["verificationPolicy"] = "QR code encodes the server verification URL based on the document serial number. Configure Company Verification Base URL for production."
 		if strings.TrimSpace(app.state.Company.VerificationBaseURL) == "" {
-			app.state.Company.VerificationBaseURL = "https://www.zenitheclipse.com/verify"
+			app.state.Company.VerificationBaseURL = "https://erp.zenitheclipse.com/verify"
 		}
 		app.state.Settings["v18VerticalWorkflowVerifyMigration"] = "done"
 	}
@@ -457,7 +457,7 @@ func (app *App) ensureStateDefaultsLocked() {
 	}
 	if app.state.Settings["v25VerificationQRMigration"] != "done" {
 		base := strings.ToLower(strings.TrimSpace(app.state.Company.VerificationBaseURL))
-		if base == "" || base == "https://www.zenitheclipse.com/verify" || base == "http://www.zenitheclipse.com/verify" {
+		if base == "" || base == "https://erp.zenitheclipse.com/verify" || base == "http://erp.zenitheclipse.com/verify" {
 			app.state.Company.VerificationBaseURL = "https://erp.zenitheclipse.com/verify"
 		}
 		app.state.Settings["verificationPolicy"] = "QR codes encode https://erp.zenitheclipse.com/verify/{document_serial} and open the live public ERP verification record."
