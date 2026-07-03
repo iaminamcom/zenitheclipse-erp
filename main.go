@@ -689,7 +689,7 @@ func (app *App) handleLogin(w http.ResponseWriter, r *http.Request) {
 	if app.loginBlockedLocked(username, client) {
 		app.addAuditLocked(username, "LOGIN_BLOCKED", "auth", "", "", "Too many failed login attempts from "+client)
 		_ = app.saveLocked()
-		errorJSON(w, http.StatusTooManyRequests, "too many failed login attempts; wait 15 minutes")
+		errorJSON(w, http.StatusTooManyRequests, "too many failed login attempts; wait 5 minutes")
 		return
 	}
 	for _, u := range app.state.Users {
@@ -729,7 +729,7 @@ func loginFailureKey(username, ip string) string {
 func (app *App) loginBlockedLocked(username, ip string) bool {
 	key := loginFailureKey(username, ip)
 	now := time.Now()
-	cutoff := now.Add(-15 * time.Minute)
+	cutoff := now.Add(-5 * time.Minute)
 	attempts := app.loginFailures[key]
 	kept := attempts[:0]
 	for _, t := range attempts {
