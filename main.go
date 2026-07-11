@@ -3533,8 +3533,16 @@ func renderLetterheadHTML(c Company, rec Record, all []Record) string {
 	if bilingual && strings.TrimSpace(secondBody) == "" {
 		secondBody = tr(secondLang, "secondLangPlaceholder")
 	}
-	chunks := splitTextPagesForLetter(body, 1180, letterFirstPageBreakEnabled(rec))
-	bilingualChunks := splitTextPagesForBilingual(body, secondBody, 1350, letterFirstPageBreakEnabled(rec))
+	pageChars := 1180
+	bilingualPageChars := 1350
+	if isContract {
+		// Contracts use a dense legal-text body. The old letter-sized limit left
+		// more than half of each A4 page empty before creating the next page.
+		pageChars = 2400
+		bilingualPageChars = 1800
+	}
+	chunks := splitTextPagesForLetter(body, pageChars, letterFirstPageBreakEnabled(rec))
+	bilingualChunks := splitTextPagesForBilingual(body, secondBody, bilingualPageChars, letterFirstPageBreakEnabled(rec))
 	pageCount := len(chunks)
 	if bilingual {
 		pageCount = len(bilingualChunks)
