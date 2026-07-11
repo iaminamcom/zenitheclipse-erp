@@ -4016,7 +4016,9 @@ func compactWorkflowFooterHTML(c Company, rec Record, all []Record) string {
 		serial := "Not Created"
 		status := "Pending"
 		if found, ok := findLinked(step.Module); ok {
-			serial = found.Number
+			// The workflow represents one business job, so show its shared job
+			// reference rather than each document's independent audit serial.
+			serial = firstNonEmpty(found.JobRef, found.Fields["jobRef"], jobRef)
 			status = firstNonEmpty(found.Status, "Draft")
 		}
 		items = append(items, `<span class="wf-item"><b>`+esc(step.Code)+`:</b> <span class="wf-serial">`+esc(serial)+`</span> <span class="wf-dash">—</span> <span class="wf-status">`+esc(localizedStatus(status, lang))+`</span></span>`)
@@ -5099,7 +5101,7 @@ func docxWorkflowLine(c Company, rec Record, all []Record) string {
 		serial := "Not Created"
 		status := "Pending"
 		if found, ok := findLinked(step.Module); ok {
-			serial = found.Number
+			serial = firstNonEmpty(found.JobRef, found.Fields["jobRef"], jobRef)
 			status = firstNonEmpty(found.Status, "Draft")
 		}
 		parts = append(parts, step.Code+": "+serial+" - "+status)
