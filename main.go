@@ -3518,6 +3518,10 @@ func renderLetterheadHTML(c Company, rec Record, all []Record) string {
 	if isContract {
 		docType = docTitleLang("contract", lang)
 	}
+	headerDocType := ""
+	if isContract {
+		headerDocType = `<div class="doc-title">` + esc(docType) + `</div>`
+	}
 	metaExtra := ""
 	if isContract {
 		metaExtra = `<br><span>` + tr(lang, "contractType") + `: ` + esc(firstNonEmpty(rec.Fields["contractType"], "Contract")) + `</span><br><span>` + tr(lang, "expiry") + `: ` + esc(firstNonEmpty(rec.Fields["expiryDate"], "-")) + `</span>`
@@ -3565,7 +3569,7 @@ func renderLetterheadHTML(c Company, rec Record, all []Record) string {
 			pageClass += " final-page"
 		}
 		pageClass += rtlClass(lang)
-		pages.WriteString(`<section class="` + pageClass + `" dir="` + dirForLang(lang) + `"><header class="clean-header"><div class="clean-brand">` + companyLogoHTML(c) + `<div><h1>` + esc(firstNonEmpty(c.Name, "ZENITH ECLIPSE CO")) + `</h1><p class="slogan">` + esc(c.Slogan) + `</p></div></div><div class="clean-meta"><div class="doc-title">` + esc(docType) + `</div><b>` + esc(rec.Number) + `</b><br><span>` + tr(lang, "date") + `: ` + esc(formatDocDate(date)) + `</span><br><span>` + tr(lang, "verify") + `: ` + esc(verification) + `</span>` + metaExtra + `</div></header>`)
+		pages.WriteString(`<section class="` + pageClass + `" dir="` + dirForLang(lang) + `"><header class="clean-header"><div class="clean-brand">` + companyLogoHTML(c) + `<div><h1>` + esc(firstNonEmpty(c.Name, "ZENITH ECLIPSE CO")) + `</h1><p class="slogan">` + esc(c.Slogan) + `</p></div></div><div class="clean-meta">` + headerDocType + `<b>` + esc(rec.Number) + `</b><br><span>` + tr(lang, "date") + `: ` + esc(formatDocDate(date)) + `</span><br><span>` + tr(lang, "verify") + `: ` + esc(verification) + `</span>` + metaExtra + `</div></header>`)
 		if firstPage {
 			pages.WriteString(`<section class="letter-head-row"><div class="to-word">` + tr(lang, "to") + `:</div><div><b>` + esc(toName) + `</b><br>` + esc(toAddress) + `</div><div class="letter-subject"><b>` + tr(lang, "subject") + `:</b><br>` + esc(subject) + `</div></section><h2 class="letter-title">` + esc(title) + `</h2>`)
 		} else {
