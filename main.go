@@ -5334,7 +5334,7 @@ main{min-width:0}.topbar{min-height:72px;background:white;border-bottom:1px soli
 <div id="login" class="login">
   <div class="login-card">
     <h1>Zenith Eclipse ERP</h1>
-    <p>Local A-to-Z ERP MVP. Default first login: <b>admin</b> / <b>ChangeMe123!</b>. Change it in Users after login.</p>
+    <p>Local A-to-Z ERP MVP.</p>
     <div class="field"><label>Username</label><input id="loginUser" value="admin" autocomplete="username"></div>
     <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Enter password"></div>
     <button class="btn" style="width:100%" onclick="login()">Login</button>
